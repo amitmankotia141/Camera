@@ -30,24 +30,59 @@ mediaRecorder.addEventListener("stop",function(){
     a.download="My mp4"
     a.click();
 })
-captureBtnCont.addEventListener("click", function () {
-    captureBtn.classList.add("scale-capture");
-    setTimeout(() => {
-        captureBtn.classList.remove("scale-capture");
-    }, 1000)
-})
 let isRecording=false;
 recordBtnCont.addEventListener("click", function () {
     if(!isRecording){
-    recordBtn.classList.add("scale-record");
     mediaRecorder.start();
+    startTimer();
+    recordBtn.classList.add("scale-record");
     timer.style.display="flex";
 }
 else{
-    recordBtn.classList.remove("scale-record");
     mediaRecorder.stop();
+    // stopTimer();
+    recordBtn.classList.remove("scale-record");
     timer.style.display="none";
 }
 isRecording=!isRecording;
 })
+let counter=0;
+let timerID;
+function startTimer(){
+    function displayTimer(){
+        let totalSeconds=counter;
+        let hours=Number.parseInt(totalSeconds/3600);
+        totalSeconds=totalSeconds%3600;
+        let minutes=Number.parseInt(totalSeconds/60);
+        totalSeconds=totalSeconds%60;
+        let seconds=totalSeconds;
+        hours=hours<10?`0${hours}`:hours;
+        minutes=minutes<10?`0${minutes}`:minutes;
+        seconds=seconds<10?`0${seconds}`:seconds;
+        timer.innerText=`${hours}:${minutes}:${seconds}`;
+        counter++;
+    }
+    timerID=setInterval(displayTimer,1000);
+}
+function stopTimer(){
+    clearInterval(timerID);
+    timer.innerText="00:00:00";
+    timer.style.display="none"
+}
+})
+captureBtnCont.addEventListener("click", function () {
+    captureBtn.classList.add("scale-capture");
+    let canvas=document.createElement("canvas");
+    let ctx=canvas.getContext("2d");
+    canvas.width=video.videoWidth;
+    canvas.height=video.videoHeight;
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    let image=canvas.toDataURL("image/jpeg");
+    let a=document.createElement("a");
+    a.href=image;
+    a.download="My jpeg"
+    a.click();
+    setTimeout(() => {
+        captureBtn.classList.remove("scale-capture");
+    }, 1000)
 })
