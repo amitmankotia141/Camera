@@ -5,6 +5,9 @@ const captureBtnCont = document.querySelector(".capture-btn-cont");
 const timerCont=document.querySelector(".timer-cont");
 const timer=document.querySelector(".timer");
 const video=document.querySelector("video")
+const allFilters=document.querySelectorAll(".filter");
+const filterLayer=document.querySelector(".filter-layer");
+let filterColor="transparent";
 const constraints={
     video:true,
     audio:true
@@ -77,6 +80,8 @@ captureBtnCont.addEventListener("click", function () {
     canvas.width=video.videoWidth;
     canvas.height=video.videoHeight;
     ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    ctx.fillStyle=filterColor;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
     let image=canvas.toDataURL("image/jpeg");
     let a=document.createElement("a");
     a.href=image;
@@ -85,4 +90,10 @@ captureBtnCont.addEventListener("click", function () {
     setTimeout(() => {
         captureBtn.classList.remove("scale-capture");
     }, 1000)
+})
+allFilters.forEach((filterEle)=>{
+filterEle.addEventListener("click",function(){
+filterColor=getComputedStyle(filterEle).getPropertyValue("background-color");
+filterLayer.style.backgroundColor=filterColor;
+})
 })

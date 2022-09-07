@@ -24,6 +24,7 @@ video{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    z-index: 1;
 }
 .action-cont>*{
     height: 5rem;
@@ -50,6 +51,7 @@ border-radius: 50%;
     bottom: 1rem;
     left: 3rem;
     color: white;
+    z-index: 1;
 }
 .timer{
     display: none;
@@ -61,6 +63,7 @@ border-radius: 50%;
     top: calc((100vh - 12rem)/2);
     left: 3rem;
     background-color: aquamarine;
+    z-index: 1;
 }
 .filter{
     height: 4rem;
@@ -80,6 +83,15 @@ border-radius: 50%;
 .transparent{
     background-color: transparent;
 }
+.filter-layer{
+    height: 100vh;
+    width: 100vw;
+    /* background-color:#ffa50052; */
+    position: absolute;
+    top: 0;
+    left: 0;
+   
+}
 .material-icons{
     color: white;
 }
@@ -87,6 +99,7 @@ border-radius: 50%;
 position: absolute;
 bottom: 6rem;
 right: 6rem;
+z-index: 1;
 }
 .gallery:hover{
     cursor: pointer;
