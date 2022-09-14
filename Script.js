@@ -36,8 +36,8 @@ navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
         // a.click();
         if (db) {
             let videoID=uid();
-            let transactionDB=db.transaction("video", "readwrite");
-            let videoStore=transactionDB.objectStore("video");
+            let dbTransaction=db.transaction("video", "readwrite");
+            let videoStore=dbTransaction.objectStore("video");
             let videoEntry={
                 id:videoID,
                 blobData:blob,
@@ -45,7 +45,7 @@ navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
             let addRequest=videoStore.add(videoEntry);
             addRequest.onsuccess=function(){
                 console.log("videoEntry added to the videoStore",addRequest.result);
-            };
+            }
         }
     })
     let isRecording = false;
@@ -97,11 +97,24 @@ captureBtnCont.addEventListener("click", function () {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     ctx.fillStyle = filterColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    let image = canvas.toDataURL("image/jpeg");
-    let a = document.createElement("a");
-    a.href = image;
-    a.download = "My jpeg"
-    a.click();
+    let imageURL = canvas.toDataURL("image/jpeg");
+    // let a = document.createElement("a");
+    // a.href = image;
+    // a.download = "My jpeg"
+    // a.click();
+    if (db) {
+        let imageID=uid();
+        let dbTransaction=db.transaction("image", "readwrite");
+        let imageStore=dbTransaction.objectStore("image");
+        let imageEntry={
+            id:`img-${imageID}`,
+            url:imageURL,
+        }
+        let addRequest=imageStore.add(imageEntry);
+        addRequest.onsuccess=function(){
+            console.log("imageEntry added to the imageStore",addRequest.result);
+        }
+    }
     setTimeout(() => {
         captureBtn.classList.remove("scale-capture");
     }, 1000)

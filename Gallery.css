@@ -8,11 +8,12 @@ body{
 h1{
     margin: 0;
     text-align: center;
+    color: white;
 }
 .back{
     width: 5rem;
     height: 5rem;
-    background-color: black;
+    background-color: red;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -28,5 +29,37 @@ h1{
 .gallery-cont{
     height:100vh;
     width: 100vw;
-    background-color:lightcyan;
+    background-color:black;
+}
+.media-cont{
+    height: 15rem;
+    width: 15rem;
+    background-color: aqua;
+    border: 5px solid white;
+    margin: 2rem;
+}
+.media{
+    height: calc( 100% - 2rem - 2rem );
+    width: 100%;
+    background-color: lightcoral;
+}
+.media>*{
+    height: 100%;
+    width: 100%;
+}
+.action-btn{
+    height: 2rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.action-btn:hover{
+    cursor: pointer;
+}
+.download{
+    background-color: black;
+}
+.delete{
+    background-color: red;
 }
